@@ -28,6 +28,7 @@ export const userSignUp = async (req, res) => {
         res.json({message:`this is the error from user signup controller ${err}`})
     }
 };
+// login controller
 export const userLoginController=async(req,res)=>{
     const{email,password}=req.body;
     const checkEmail=await userModel.findOne({email})
@@ -46,3 +47,24 @@ export const userLoginController=async(req,res)=>{
         res.json({m:'enter a valid email'})
     }
 }
+// get co ordinates post api
+export const PostCo_Ordinates=async(req,res)=>{
+    try {
+        const { startLocation, endLocation } = req.body;
+        const userId = req.params.id;
+            const user = await userModel.findById(userId);
+        console.log(user)
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+        user.startlocation = startLocation; 
+        user.endlocation = endLocation; 
+            await user.save();
+    
+        res.json({ message: 'ok' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({err:`this is the error fromPostCo_Ordinates controller `});
+      }
+    };
+    

@@ -14,8 +14,13 @@ const userSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Authcollection'
     },
-    coordinates:{
-        type:Array
+    startlocation:{
+        type:[Number],
+        index:'2dsphere'
+    },
+    endlocation:{
+      type:[Number],
+      index:'2dsphere'
     }
   }
   );
