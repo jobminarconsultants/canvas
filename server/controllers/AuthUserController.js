@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import AuthModel from "../model/AuthModel.js";
 import userModel from "../model/UserModel.js";
 import bcrypt from 'bcrypt';
@@ -48,23 +49,42 @@ export const userLoginController=async(req,res)=>{
     }
 }
 // get co ordinates post api
-export const PostCo_Ordinates=async(req,res)=>{
-    try {
-        const { startLocation, endLocation } = req.body;
-        const userId = req.params.id;
-            const user = await userModel.findById(userId);
-        console.log(user)
-        if (!user) {
-          return res.status(404).json({ error: 'User not found' });
-        }
-        user.startlocation = startLocation; 
-        user.endlocation = endLocation; 
-            await user.save();
-    
-        res.json({ message: 'ok' });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({err:`this is the error fromPostCo_Ordinates controller `});
+
+export const PostCoordinates = async (req, res) => {
+  try {
+    const { startLocation, endLocation, date } = req.body;
+    const userId = req.params.id;
+
+    // Find the user by ID
+    if (!mongoose.isValidObjectId(userId)) {
+        return res.status(400).json({ error: 'Invalid user ID format' });
       }
-    };
-    
+  
+      const user = await userModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+    // Check if the user already has a location entry for the specified date
+    const existingLocation = user.dailyLocations.find((location) => location.date.toISOString() === date);
+    if (existingLocation) {
+      // If a location entry already exists for this date, update it
+      // existingLocation.startlocation = startLocation;
+      existingLocation.endlocation = endLocation;
+      res.json({message:'end location updated'})
+    } else {
+      // If not, create a new location entry for the date
+      user.dailyLocations.push({
+        date,
+        startlocation: startLocation,
+        endlocation: endLocation,
+      });
+    }
+    await user.save();
+    res.json({ message: 'Location data posted successfully' });
+  } catch (err) {
+    // console.error(err);
+    res.json({ error: `Error from PostCoordinates controller ${err}` });
+  }
+};
