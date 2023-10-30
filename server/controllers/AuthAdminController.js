@@ -34,7 +34,6 @@ export const LoginController=async(req,res)=>{
     const{email,password}=req.body;
     const checkEmail=await AuthModel.findOne({email})
     const checkUser=await userModel.findOne({email})
-
     if(checkEmail){
         const checkPassword=await bcrypt.compare(password,checkEmail.password)
         if(checkPassword){
@@ -52,7 +51,6 @@ export const LoginController=async(req,res)=>{
             const token=await jwt.sign({email},process.env.TOKEN_SIGN)
             res.json({message:'ok',msg:'user',token:token,id:checkEmail.id})
         }
-       
         else{
             res.json({m:'wrong password'})
         }

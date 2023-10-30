@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const dailyLocationSchema = new mongoose.Schema({
   date: {
     type: Date,
-    required: true,
-    unique: true,
+    // Remove unique constraint
+    // unique: true,
   },
   startlocation: {
     type: [Number],
