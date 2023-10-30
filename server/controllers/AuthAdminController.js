@@ -33,16 +33,30 @@ export const SignUpController=async(req,res)=>{
 export const LoginController=async(req,res)=>{
     const{email,password}=req.body;
     const checkEmail=await AuthModel.findOne({email})
+    const checkUser=await userModel.findOne({email})
+
     if(checkEmail){
         const checkPassword=await bcrypt.compare(password,checkEmail.password)
         if(checkPassword){
             const token=await jwt.sign({email},process.env.TOKEN_SIGN)
-            res.json({message:'ok',msg:'login success',token:token,id:checkEmail.id})
+            res.json({message:'ok',msg:'admin',token:token,id:checkEmail.id})
         }
        
         else{
             res.json({m:'wrong password'})
         }
+    }
+    else if(checkUser){
+        const checkUserPassword=await bcrypt.compare(password,checkEmail.password)
+        if(checkUserPassword){
+            const token=await jwt.sign({email},process.env.TOKEN_SIGN)
+            res.json({message:'ok',msg:'user',token:token,id:checkEmail.id})
+        }
+       
+        else{
+            res.json({m:'wrong password'})
+        }
+
     }
     else{
         res.json({m:'enter a valid email'})

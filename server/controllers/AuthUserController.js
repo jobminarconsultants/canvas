@@ -30,24 +30,24 @@ export const userSignUp = async (req, res) => {
     }
 };
 // login controller
-export const userLoginController=async(req,res)=>{
-    const{email,password}=req.body;
-    const checkEmail=await userModel.findOne({email})
-    if(checkEmail){
-        const checkPassword=await bcrypt.compare(password,checkEmail.password)
-        if(checkPassword){
-            const token=await jwt.sign({email},process.env.TOKEN_SIGN)
-            res.json({message:'ok',msg:'login success',token:token,id:checkEmail.id})
-        }
+// export const userLoginController=async(req,res)=>{
+//     const{email,password}=req.body;
+//     const checkEmail=await userModel.findOne({email})
+//     if(checkEmail){
+//         const checkPassword=await bcrypt.compare(password,checkEmail.password)
+//         if(checkPassword){
+//             const token=await jwt.sign({email},process.env.TOKEN_SIGN)
+//             res.json({message:'ok',msg:'login success',token:token,id:checkEmail.id})
+//         }
        
-        else{
-            res.json({m:'wrong password'})
-        }
-    }
-    else{
-        res.json({m:'enter a valid email'})
-    }
-}
+//         else{
+//             res.json({m:'wrong password'})
+//         }
+//     }
+//     else{
+//         res.json({m:'enter a valid email'})
+//     }
+// }
 // get co ordinates post api
 
 export const PostCoordinates = async (req, res) => {
