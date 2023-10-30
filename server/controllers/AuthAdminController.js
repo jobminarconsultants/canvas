@@ -46,10 +46,10 @@ export const LoginController=async(req,res)=>{
         }
     }
     else if(checkUser){
-        const checkUserPassword=await bcrypt.compare(password,checkEmail.password)
+        const checkUserPassword=await bcrypt.compare(password,checkUser.password)
         if(checkUserPassword){
             const token=await jwt.sign({email},process.env.TOKEN_SIGN)
-            res.json({message:'ok',msg:'user',token:token,id:checkEmail.id})
+            res.json({message:'ok',msg:'user',token:token,id:checkUser.id})
         }
         else{
             res.json({m:'wrong password'})
