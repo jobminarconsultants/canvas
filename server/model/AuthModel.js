@@ -4,7 +4,7 @@ const AuthSchema = new mongoose.Schema({
   password: String,
   email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: String,
@@ -15,6 +15,7 @@ const AuthSchema = new mongoose.Schema({
       ref: "usercollection", // Reference the collection name here
     },
   ],
+  notifications:[]
 });
 
 const AuthModel = mongoose.model("Authcollection", AuthSchema);
