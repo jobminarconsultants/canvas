@@ -406,27 +406,27 @@ export const getNotifications = async (req, res) => {
 // }
 // post status
 
-export const postStatus = async (req, res) => {
-  const { status } = req.body;
-  const {id}=req.params
-  console.log(id)
-  try {
-    const getUser = await userModel.findById(id);
-    console.log(getUser)
+// export const postStatus = async (req, res) => {
+//   const { status } = req.body;
+//   const {id}=req.params
+//   console.log(id)
+//   try {
+//     const getUser = await userModel.findById(id);
+//     console.log(getUser)
 
-    if (getUser) {
-      // console.log(status)
-      getUser.status = status; // Update the user's status field
-      await getUser.save(); // Save the updated document back to the database
+//     if (getUser) {
+//       // console.log(status)
+//       getUser.status = status; // Update the user's status field
+//       await getUser.save(); // Save the updated document back to the database
 
-      res.json({ m: 'ok' });
-    } else {
-      res.json({ m: "user not found" });
-    }
-  } catch (err) {
-    res.json({ m: err.message });
-  }
-}
+//       res.json({ m: 'ok' });
+//     } else {
+//       res.json({ m: "user not found" });
+//     }
+//   } catch (err) {
+//     res.json({ m: err.message });
+//   }
+// }
 export const logout = async (req, res) => {
   // const { status } = req.body;
   const { id } = req.params;
@@ -449,3 +449,35 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+// post incident controller 
+export const postIncident=async(req,res)=>{
+  const{comments,file}=req.body;
+  const {id}=req.params;
+  try{
+    const user=await userModel.findById(id);
+    if(user){
+      const newData=new userModel({
+        file,comments
+      })
+      res.json({m:"incident posted"})
+    }
+    else{
+      res.json({m:"user not found"})
+    }
+  }
+  catch(err){
+    res.json({m:err.message})
+  }
+}
+export const getIncident=async(req,res)=>{
+  // const {id}=req.params;
+ try{
+  const user=await userModel.find()
+  res.json({m:user.incident})
+ }
+ catch(err){
+  res.json({m:err.message})
+ }
+
+
+}

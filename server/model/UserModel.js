@@ -85,6 +85,10 @@ const useReports=new mongoose.Schema({
     type:String
   }
 })
+const incident=new mongoose.Schema({
+  comments:String,
+  file:String
+})
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -103,6 +107,7 @@ const userSchema = new mongoose.Schema({
   dailyLocations: [dailyLocationSchema],
   dailyForms:[dailyForms],
   reports:[useReports],
+  incident:[incident],
   status:{
     type:String,
     default:'offline'
