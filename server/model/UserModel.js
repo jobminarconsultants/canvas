@@ -102,7 +102,11 @@ const userSchema = new mongoose.Schema({
   },
   dailyLocations: [dailyLocationSchema],
   dailyForms:[dailyForms],
-  reports:[useReports]
+  reports:[useReports],
+  status:{
+    type:String,
+    default:'offline'
+  }
 });
 userSchema.set("strictPopulate", false);
 const userModel = mongoose.model("usercollection", userSchema);

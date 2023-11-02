@@ -402,5 +402,50 @@ export const getNotifications = async (req, res) => {
     res.json({ error: err.message });
   }
 };
-export const getCo_Ordinates=async(req,res)=>{
+// export const getCo_Ordinates=async(req,res)=>{
+// }
+// post status
+
+export const postStatus = async (req, res) => {
+  const { status } = req.body;
+  const {id}=req.params
+  console.log(id)
+  try {
+    const getUser = await userModel.findById(id);
+    console.log(getUser)
+
+    if (getUser) {
+      // console.log(status)
+      getUser.status = status; // Update the user's status field
+      await getUser.save(); // Save the updated document back to the database
+
+      res.json({ m: 'ok' });
+    } else {
+      res.json({ m: "user not found" });
+    }
+  } catch (err) {
+    res.json({ m: err.message });
+  }
 }
+export const logout = async (req, res) => {
+  // const { status } = req.body;
+  const { id } = req.params;
+
+  try {
+    const getUser = await userModel.findById(id);
+
+    if (getUser) {
+      // Set the user's status to 'offline' (or your desired value)
+      getUser.status = 'offline'; // Update the user's status field
+
+      // Save the updated document back to the database
+      await getUser.save();
+
+      res.json({ message: 'User logged out successfully' });
+    } else {
+      res.json({ message: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
