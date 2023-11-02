@@ -28,7 +28,7 @@ export const userSignUp = async (req, res) => {
     await newUser.save();
 
     const RootUser = await AuthModel.findById(oid);
-    console.log(RootUser)
+    // console.log(RootUser)
     if (RootUser) {
       console.log(RootUser,'if')
       RootUser.users.push(newUser._id); // Push the new user's _id to RootUser's users array
