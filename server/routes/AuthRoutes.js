@@ -1,6 +1,6 @@
 import  { Router } from 'express';
 import { LoginController, SignUpController, getMyUsers } from '../controllers/AuthAdminController.js';
-import {PostCoordinates, getCoordinatesByDateAndUser, getDataByDate, getIncident, getNotifications, getUserReports, logout, notificationsController, postFormData, postIncident, postStatus, postUserReport, userSignUp } from '../controllers/AuthUserController.js';
+import {PostCoordinates, getCoordinatesByDateAndUser, getDataByDate, getIncident, getNotifications, getUserReports, logout, notificationsController, postFormData, postIncident, postUserReport, userSignUp } from '../controllers/AuthUserController.js';
 const AuthRouter=Router()
 AuthRouter.post('/admin/signup',SignUpController)
 AuthRouter.post('/admin/login',LoginController)
