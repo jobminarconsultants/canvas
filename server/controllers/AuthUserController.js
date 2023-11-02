@@ -317,8 +317,8 @@ export const postUserReport = async (req, res) => {
         // Push the new user report into the user's reports array
         user.reports.push(newUserReport);
         // Save the user with the updated reports array
+        // }<>><>----++++>
         await user.save();
-
         res.status(201).json({ message: 'User report submitted successfully' });
       }
     });
@@ -403,5 +403,4 @@ export const getNotifications = async (req, res) => {
   }
 };
 export const getCo_Ordinates=async(req,res)=>{
-
 }
