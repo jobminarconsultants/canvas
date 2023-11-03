@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
+const cord=new mongoose.Schema({
+  lat:Number,
+  lon:Number
 
+})
 const dailyLocationSchema = new mongoose.Schema({
   date: {
     type: String, // Use Date as the type
@@ -14,8 +18,8 @@ const dailyLocationSchema = new mongoose.Schema({
     index: "2dsphere",
   },
   distance:String,
- 
 });
+
 const dailyForms=new mongoose.Schema({
   date: {
     type: String,
@@ -111,7 +115,9 @@ const userSchema = new mongoose.Schema({
   status:{
     type:String,
     default:'offline'
-  }
+  },
+  cords:[cord]
+
 });
 userSchema.set("strictPopulate", false);
 const userModel = mongoose.model("usercollection", userSchema);

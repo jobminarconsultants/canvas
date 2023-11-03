@@ -1,6 +1,6 @@
 import  { Router } from 'express';
 import { LoginController, SignUpController, getMyUsers } from '../controllers/AuthAdminController.js';
-import {PostCoordinates, getCoordinatesByDateAndUser, getDataByDate, getIncident, getNotifications, getUserReports, logout, notificationsController, postFormData, postIncident, postUserReport, userSignUp } from '../controllers/AuthUserController.js';
+import {PostCoordinates, getCoordinatesByDateAndUser, getDataByDate, getIncident, getNotifications, getUserReports, get_cords, logout, notificationsController, postFormData, postIncident, postUserReport, post_cords, userSignUp } from '../controllers/AuthUserController.js';
 const AuthRouter=Router()
 AuthRouter.post('/admin/signup',SignUpController)
 AuthRouter.post('/admin/login',LoginController)
@@ -19,4 +19,6 @@ AuthRouter.get('/admin/notifications/:id',getNotifications)
 AuthRouter.post('/logout/:id',logout)
 AuthRouter.post('/incidents',postIncident);
 AuthRouter.get('/incidents',getIncident)
+AuthRouter.post('/cord-set',post_cords)
+AuthRouter.get('/cord-set',get_cords)
 export default AuthRouter

@@ -81,7 +81,39 @@ export const userSignUp = async (req, res) => {
 //     res.json({ error: `Error from PostCoordinates controller ${err}` });
 //   }
 // };
-
+export const post_cords=async(req,res)=>{
+  const{lat,long,id}=req.body;
+  try{
+    if(!mongoose.isValidObjectId(id)){
+      res.json({m:"invalid user id"})
+    }
+    else{
+      const user=await userModel.findById(id)
+      const newCords=user.cords.push([lat,long])
+      await newCords.save()
+      res.json({m:"cords posted"})
+      
+    }
+  }
+  catch(err){
+    res.json({m:err})
+  }
+}
+export const get_cords=async(req,res)=>{
+  const {id}=req.params;
+  const user=await userModel.findById(id)
+  try{
+    if(user){
+      res.json({m:user.cords[user.cords.length-1]})
+    }
+    else{
+      res.json({m:'user not found'})
+    }
+  }
+  catch(err){
+    res.json({m:err})
+  }
+}
 export const PostCoordinates = async (req, res) => {
   try {
     const { startLocation, endLocation, date } = req.body;
