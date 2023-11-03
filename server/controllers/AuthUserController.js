@@ -502,9 +502,9 @@ export const postIncident=async(req,res)=>{
   }
 }
 export const getIncident=async(req,res)=>{
-  // const {id}=req.params;
+  const {id}=req.params;
  try{
-  const user=await userModel.find()
+  const user=await userModel.findById(id)
   res.json({m:user.incident})
  }
  catch(err){
