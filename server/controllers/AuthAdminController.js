@@ -46,12 +46,14 @@ export const LoginController=async(req,res)=>{
         }
     }
     else if(checkUser){
-        checkUser.status=='online'
+        // checkUser.status=='online'
+        // const status=await checkUser.sta
+        checkUser.status="online"
         await checkUser.save()
         const checkUserPassword=await bcrypt.compare(password,checkUser.password)
         if(checkUserPassword){
             const token=await jwt.sign({email},process.env.TOKEN_SIGN)
-            res.json({message:'ok',msg:'user',token:token,id:checkUser.id,logStatus:checkUser.password})
+            res.json({message:'ok',msg:'user',token:token,id:checkUser.id,logStatus:checkUser.status})
         }
         else{
             res.json({m:'wrong password'})
